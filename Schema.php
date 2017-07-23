@@ -15,7 +15,7 @@ class Schema
 			case 'D32':			return Schema\Primitive\Bytes32::class;
 			case 'B':			return 'bool';
 			case 'S':			return 'string';
-			case 'Q':			return 'int';
+			case 'Q':			return Schema\Primitive\Quantity::class;
 			case 'Array|DATA':	return Schema\Primitive\ArrayOrData::class;
 			case 'Q|T':			return Schema\Primitive\QuantityOrTag::class;
 			case 'B|EthSyncing':return Schema\Primitive\BooleanOrEthSyncing::class;

@@ -2,13 +2,25 @@
 
 class QuantityOrTag extends MultiPrimitive
 {
-	const TAGS = ['latest', 'earliest', 'pending'];
-	public $data;
-	public $type;
+	const TYPES = ['Tag', 'Quantity'];
 
 	public function __construct($data)
 	{
 		$this->data = $data;
-		$this->type = in_array($this->data, self::TAGS) ? 'tag' : 'quantity';
+
+		if ($data instanceof Tag)
+			$this->type = 'Tag';
+		elseif ($data instanceof Quantity)
+			$this->type = 'Quantity';
+		else
+		{
+			$this->type = self::TYPES[$data != Tag::EARLIEST && $data != Tag::LATEST && $data != Tag::PENDING];
+			$this->data = new $this->type($data);
+		}
+	}
+
+	public function encode()
+	{
+		return $this->data->encode();
 	}
 }

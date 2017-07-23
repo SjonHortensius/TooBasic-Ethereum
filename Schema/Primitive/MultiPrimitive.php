@@ -1,9 +1,7 @@
 <?php namespace TooBasic\Ethereum\Schema\Primitive;
+use TooBasic\Ethereum\Schema\Primitive;
 
-abstract class MultiPrimitive
+abstract class MultiPrimitive extends Primitive
 {
-	public static function decode($data)
-	{
-		return new static($data);
-	}
+	public $type;
 }
