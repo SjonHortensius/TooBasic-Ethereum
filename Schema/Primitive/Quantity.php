@@ -3,14 +3,16 @@ use TooBasic\Ethereum\Schema\Primitive;
 
 class Quantity extends Primitive
 {
-	public function __construct($data)
+	public function __construct(string $data)
 	{
 		if ('0x' == substr($data, 0, 2) || '0X' == substr($data, 0, 2))
 			$data = substr($data, 2);
 
-		if (extension_loaded('bcmath'))
+		if (is_int($data))
+			$this->data = (string)$data;
+		elseif (extension_loaded('bcmath'))
 			$this->data = static::_bcDecode($data);
-		else if (extension_loaded('gmp'))
+		elseif (extension_loaded('gmp'))
 			$this->data = static::_gmpDecode($data);
 		else # (string)hex2bin($data) would be extremely imprecise
 			throw new Exception('Please install `gmp` or `bcmath` extension to decode large numbers');
@@ -40,6 +42,20 @@ class Quantity extends Primitive
 
 	public function encode()
 	{
-		return bin2hex($this->data);
+		if (extension_loaded('bcmath'))
+		{
+			$dec = $this->data;
+			$hex = '';
+			while($dec > 0)
+			{
+				$hex = dechex(bcmod($dec,'16')).$hex;
+				$dec = bcdiv($dec,'16',0);
+			}
+			return '0x'.$hex;
+		}
+		elseif (extension_loaded('gmp'))
+			return '0x'. gmp_strval(gmp_init($this->data, 10), 16 );
+		else
+			return '0x'.dechex($this->data);
 	}
 }

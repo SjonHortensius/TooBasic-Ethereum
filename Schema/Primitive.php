@@ -3,11 +3,13 @@
 abstract class Primitive
 {
 	public $data;
-	abstract protected function __construct($data);
 
 	public final static function decode($data)
 	{
-		return new static($data);
+		if ($data instanceof static)
+			return $data;
+		else
+			return new static($data);
 	}
 
 	abstract public function encode();
