@@ -1,4 +1,5 @@
 <?php namespace TooBasic\Ethereum\Schema\Primitive;
+use TooBasic\Ethereum\Schema\Tag;
 
 class QuantityOrTag extends MultiPrimitive
 {

@@ -28,7 +28,7 @@ var_dump('Local sync-status: ', self::$client->eth_syncing());
 var_dump('Local last-block:', self::$client->eth_blockNumber());
 var_dump('Foundation tip-jar balance (in wei):', self::$client->eth_getBalance(
 	new Schema\Primitive\Bytes20('fB6916095ca1df60bB79Ce92cE3Ea74c37c5d359'),
-	new Schema\Primitive\QuantityOrTag(Schema\Primitive\Tag::decode('latest'))
+	new Schema\Primitive\QuantityOrTag(Schema\Tag::decode('latest'))
 ));
 
 // Show the contents of a complete block including all transactions:
@@ -40,7 +40,6 @@ var_dump(self::$client->eth_getBlockByNumber(new Schema\Primitive\QuantityOrTag(
 
 * Bytes / Bytes20 / Bytes32
 * Quantity (with `bcmath` / `gmp` as backend for large numbers)
-* Tag (a simple wrapper for the latest/earliest/pending tag)
 * boolean - supported by using native PHP booleans
 * string - supported by using native PHP booleans
 
@@ -48,6 +47,12 @@ Since the API has a few methods that require or return different primitives, we 
 * BooleanOrEthSyncing
 * ArrayOrData
 * QuantityOrTag
+
+## Supported tag
+
+The RPC describes a single Tag Type which is neither a Primitive nor an Object
+
+* Tag - a wrapper for the latest/earliest/pending tag
 
 ## Supported objects:
 

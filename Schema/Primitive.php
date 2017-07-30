@@ -1,6 +1,6 @@
 <?php namespace TooBasic\Ethereum\Schema;
 
-abstract class Primitive
+abstract class Primitive implements Type
 {
 	public $data;
 

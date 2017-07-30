@@ -2,7 +2,7 @@
 use TooBasic\Ethereum\Schema;
 use TooBasic\Exception;
 
-abstract class Object
+abstract class Object implements Type
 {
 	private static $_properties;
 	const PROPERTY_ARRAYS = [
@@ -12,10 +12,13 @@ abstract class Object
 	];
 
 	// This gets called by the Client for method-results
-	public static function decode(\stdClass $data)
+	public static function decode($data)
 	{
 		if (!isset($data))
 			return null;
+
+		if (!$data instanceof \stdClass)
+			throw new Exception('%s expects only objects to decode, not %s', [__CLASS__, gettype($data)]);
 
 		$class = get_called_class();
 		if (!isset(self::$_properties[$class]))
