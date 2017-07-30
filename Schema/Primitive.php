@@ -16,6 +16,11 @@ abstract class Primitive implements Type
 
 	public function __toString()
 	{
-		return get_called_class() .'['. $this->data .']';
+		return static::encode();
+	}
+
+	public function __debugInfo()
+	{
+		return ['data' => static::encode()];
 	}
 }

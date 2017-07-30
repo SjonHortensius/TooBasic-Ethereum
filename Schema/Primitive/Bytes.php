@@ -13,11 +13,6 @@ class Bytes extends Primitive
 
 	public function encode()
 	{
-		return '0x'.bin2hex($this->data);
-	}
-
-	public function __debugInfo()
-	{
-		return ['data' => self::encode()];
+		return '0x' . bin2hex($this->data);
 	}
 }
