@@ -1,6 +1,7 @@
 <?php namespace TooBasic\Ethereum;
 
 include 'Schema.php';
+include('Schema/Type.php');
 include 'Schema/Object.php';
 include '../TooBasic/Exception.php';
 
