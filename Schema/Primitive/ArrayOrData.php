@@ -1,18 +1,22 @@
 <?php namespace TooBasic\Ethereum\Schema\Primitive;
+use TooBasic\Ethereum\Schema\Object\EthSyncing;
 
-#FIXME data is undefined & unused by the spec; check if it is bytes/string
 class ArrayOrData extends MultiPrimitive
 {
-	const TYPES = ['array', 'data'];
+	const TYPES = ['array', 'Bytes'];
 
 	public function __construct($data)
 	{
 		$this->type = self::TYPES[!is_array($data)];
-		$this->data = $data;
+
+		if ('array' == $this->type)
+			$this->data = $data;
+		else
+			$this->$data = EthSyncing::decode($data);
 	}
 
 	public function encode()
 	{
-		return $this->data;
+		return $this->type=='array' ? $this->data : $this->data->encode();
 	}
 }

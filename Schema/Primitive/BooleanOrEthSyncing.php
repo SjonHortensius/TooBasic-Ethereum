@@ -7,18 +7,12 @@ class BooleanOrEthSyncing extends MultiPrimitive
 
 	public function __construct($data)
 	{
-		if (is_bool($data))
-		{
-			$this->type = 'bool';
-			$this->data = $data;
-		}
-		else
-		{
-			$this->type = 'EthSyncing';
+		$this->type = self::TYPES[!is_bool($data)];
 
-			if (!$data instanceof EthSyncing)
-				$this->data = EthSyncing::decode($data);
-		}
+		if ('bool' == $this->type)
+			$this->data = $data;
+		else
+			$this->data = EthSyncing::decode($data);
 	}
 
 	public function encode()

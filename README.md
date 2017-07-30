@@ -28,11 +28,11 @@ var_dump('Local sync-status: ', self::$client->eth_syncing());
 var_dump('Local last-block:', self::$client->eth_blockNumber());
 var_dump('Foundation tip-jar balance (in wei):', self::$client->eth_getBalance(
 	new Schema\Primitive\Bytes20('fB6916095ca1df60bB79Ce92cE3Ea74c37c5d359'),
-	new Schema\Primitive\QuantityOrTag(Schema\Tag::decode('latest'))
+	new Schema\Primitive\QuantityOrTag(Schema\Tag::LATEST)
 ));
 
 // Show the contents of a complete block including all transactions:
-var_dump(self::$client->eth_getBlockByNumber(new Schema\Primitive\QuantityOrTag(new Schema\Primitive\Quantity(dechex(4000000))), true));
+var_dump(self::$client->eth_getBlockByNumber(new Schema\Primitive\QuantityOrTag(dechex(4000000)), true));
 
 ```
 

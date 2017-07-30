@@ -1,4 +1,5 @@
 <?php namespace TooBasic\Ethereum\Schema\Primitive;
+use TooBasic\Ethereum\Schema;
 use TooBasic\Ethereum\Schema\Tag;
 
 class QuantityOrTag extends MultiPrimitive
@@ -7,17 +8,12 @@ class QuantityOrTag extends MultiPrimitive
 
 	public function __construct($data)
 	{
-		$this->data = $data;
+		$this->type = self::TYPES[$data != Tag::EARLIEST && $data != Tag::LATEST && $data != Tag::PENDING];
 
-		if ($data instanceof Tag)
-			$this->type = 'Tag';
-		elseif ($data instanceof Quantity)
-			$this->type = 'Quantity';
+		if ('Tag' == $this->type)
+			$this->data = new Tag($data);
 		else
-		{
-			$this->type = self::TYPES[$data != Tag::EARLIEST && $data != Tag::LATEST && $data != Tag::PENDING];
-			$this->data = new $this->type($data);
-		}
+			$this->data = new Schema\Primitive\Quantity($data);
 	}
 
 	public function encode()
