@@ -31,7 +31,7 @@ class ClientGenerator
 				else
 					$type = reduceNamespace(Schema::decodeType($type));
 
-				$params [] = (in_array($paramName, $requiredParams) ? '' : '?') . $type . ' $' . $paramName;
+				$params [] = (in_array($paramName, $requiredParams) ? '' : '?') . $type . ' $' . $paramName. (in_array($paramName, $requiredParams) ? '' : ' = null');
 				$props []= "public \$$paramName;";
 				$constructor []= "\$this->$paramName = \$$paramName;";
 			}
