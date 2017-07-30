@@ -54,7 +54,7 @@ abstract class Object implements Type
 		$return = [];
 
 		foreach (self::_getClassProperties(get_called_class()) as $name => $type)
-			if (0 === strpos($type, Schema::class))
+			if (0 === strpos($type, Schema::class) && isset($this->$name))
 				$return[$name] = $this->$name->encode();
 			else
 				$return[$name] = $this->$name;
