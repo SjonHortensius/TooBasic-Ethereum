@@ -39,7 +39,7 @@ var_dump(self::$client->eth_getBlockByNumber(new Schema\Primitive\QuantityOrTag(
 ## Supported primitives:
 
 * Bytes / Bytes20 / Bytes32
-* Quantity (with `bcmath` / `gmp` as backend for large numbers)
+* Quantity / PaddedQuantity (with `bcmath` / `gmp` as backend for large numbers)
 * boolean - supported by using native PHP booleans
 * string - supported by using native PHP booleans
 

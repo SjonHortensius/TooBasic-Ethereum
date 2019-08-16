@@ -16,6 +16,7 @@ class Schema
 			case 'B':			return 'bool';
 			case 'S':			return 'string';
 			case 'Q':			return Schema\Primitive\Quantity::class;
+			case 'QP':			return Schema\Primitive\PaddedQuantity::class;
 			case 'Array|DATA':	return Schema\Primitive\ArrayOrData::class;
 			case 'Q|T':			return Schema\Primitive\QuantityOrTag::class;
 			case 'B|EthSyncing':return Schema\Primitive\BooleanOrEthSyncing::class;
