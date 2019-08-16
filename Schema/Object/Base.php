@@ -1,8 +1,8 @@
-<?php namespace TooBasic\Ethereum\Schema;
+<?php namespace TooBasic\Ethereum\Schema\Object;
 use TooBasic\Ethereum\Schema;
 use TooBasic\Exception;
 
-abstract class Object implements Type
+abstract class Base implements Schema\Type
 {
 	private static $_properties = [];
 	const PROPERTY_ARRAYS = [
