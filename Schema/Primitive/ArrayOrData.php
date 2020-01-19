@@ -12,7 +12,7 @@ class ArrayOrData extends MultiPrimitive
 		if ('array' == $this->type)
 			$this->data = $data;
 		else
-			$this->$data = EthSyncing::decode($data);
+			$this->data = Bytes::decode($data);
 	}
 
 	public function encode()

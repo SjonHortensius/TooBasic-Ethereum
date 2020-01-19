@@ -4,7 +4,7 @@ use TooBasic\Exception;
 
 abstract class Base implements Schema\Type
 {
-	private static $_properties = [];
+	protected static $_properties = [];
 	const PROPERTY_ARRAYS = [
 #FIXME	'topics' => '',
 		'transactions' => Schema\Object\Transaction::class,
@@ -22,7 +22,7 @@ abstract class Base implements Schema\Type
 
 		// Determine order of constructor parameters | Decode individual parameters as well
 		$params = [];
-		foreach (self::_getClassProperties(get_called_class()) as $name => $type)
+		foreach (static::_getClassProperties() as $name => $type)
 		{
 			// Not all properties are required
 			if (!isset($data->$name))
@@ -37,23 +37,23 @@ abstract class Base implements Schema\Type
 			$params[] = $value;
 		}
 
-		return (new \ReflectionClass(get_called_class()))->newInstanceArgs($params);
+		return (new \ReflectionClass(static::class))->newInstanceArgs($params);
 	}
 
-	private static function _getClassProperties($class)
+	private static function _getClassProperties()
 	{
-		if (!isset(self::$_properties[$class]))
-			foreach ((new \ReflectionMethod($class, '__construct'))->getParameters() as $parameter)
-				self::$_properties[$class][$parameter->name] = (string)$parameter->getType();
+		if (!isset(static::$_properties[static::class]))
+			foreach ((new \ReflectionMethod(static::class, '__construct'))->getParameters() as $parameter)
+				static::$_properties[static::class][$parameter->name] = $parameter->getType()->getName();
 
-		return self::$_properties[$class];
+		return static::$_properties[static::class];
 	}
 
 	public function encode(): array
 	{
 		$return = [];
 
-		foreach (self::_getClassProperties(get_called_class()) as $name => $type)
+		foreach (static::_getClassProperties() as $name => $type)
 			if (0 === strpos($type, Schema::class) && isset($this->$name))
 				$return[$name] = $this->$name->encode();
 			else
